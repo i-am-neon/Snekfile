@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Get the current directory
+# Get the current working directory
 currDir="$(cd "$(dirname "$0")" && pwd)"
 
 echo "--------------------------------------------------------"
@@ -8,18 +8,20 @@ echo "Assembling everything and building ROM... Please wait..."
 echo "--------------------------------------------------------"
 
 # Change to the Text directory and assemble text
-cd "$currDir/Text"
+cd "$currDir/Text" || exit
 echo "Assembling text..."
-./AssembleText.sh
+./AssembleText.sh noPause
 
 # Change to the Tables directory and assemble tables
-cd "$currDir/Tables"
+cd "$currDir/Tables" || exit
 echo "Assembling tables..."
-./AssembleTables.sh
+./AssembleTables.sh noPause
 
-# Return to the base directory and run MAKEHACK
-cd "$currDir"
-./MAKEHACK.sh
+# Return to the base directory and run MAKEHACK.sh
+cd "$currDir" || exit
+./MAKEHACK.sh noPause
 
-# Pause to keep the terminal open
-read -p "Press any key to continue..."
+# Optional pause equivalent
+if [[ "$1" != "noPause" ]]; then
+  read -rp "Press Enter to continue..."
+fi
