@@ -20,8 +20,3 @@ echo "Assembling tables..."
 # Return to the base directory and run MAKEHACK.sh
 cd "$currDir" || exit
 ./MAKEHACK.sh noPause
-
-# Optional pause equivalent
-if [[ "$1" != "noPause" ]]; then
-  read -rp "Press Enter to continue..."
-fi

@@ -37,8 +37,3 @@ cd "$UPS_DIR" || {
 
 # Run UPS patch generation using ups.exe, output to the top-level directory
 wine ups.exe diff -b "$WINE_INPUT" -m "$WINE_OUTPUT" -o "$WINE_UPS_OUTPUT"
-
-# Optional pause equivalent (if you need it)
-if [[ "$1" != "noPause" ]]; then
-  read -rp "Press Enter to continue..."
-fi
