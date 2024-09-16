@@ -42,7 +42,11 @@
 	
 	// Install maps
 	
+	MESSAGE BEFORE Events end at offset CURRENTOFFSET
+
 	// Install events
+	#include "Events/MasterEventInstaller.event"
+	MESSAGE Events end at CURRENTOFFSET
 	
 	ASSERT $C00000 - CURRENTOFFSET // Ensures that we don't pass the end of the free space block.
 	

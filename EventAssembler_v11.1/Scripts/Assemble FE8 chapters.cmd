@@ -3,7 +3,7 @@ cd %~dp0
 cd ..
 echo on
 
-Core A FE8 -output:%1 "-input:%~dp1Prologue.event"
+Core A FE8 -output:%1 "-input:%~dp1MyPrologue.event"
 Core A FE8 -output:%1 "-input:%~dp1Ch1.event"
 Core A FE8 -output:%1 "-input:%~dp1Ch2.event"
 Core A FE8 -output:%1 "-input:%~dp1Ch3.event"

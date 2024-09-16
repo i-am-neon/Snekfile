@@ -5,6 +5,10 @@ Slim Blade[X]
 # 0x036C GoldLanceNameText
 Gold Lance[X]
 
+# 0x0900
+[OpenMidLeft]This is a custom prologue event.[A][NL]
+[OpenMidLeft]Let's make sure the text shows correctly.[A][X]
+
 # 0x0903 PrologueBeginningText
 # [FarFarLeft] | [FarLeft] [MidLeft] [Left] x [Right] [MidRight] [FarRight] | [FarFarRight]
 [FarLeft][LoadEirika]Hey.[A]
