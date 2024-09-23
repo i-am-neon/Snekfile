@@ -1,3 +1,14 @@
+## Prologue_NarratorOpening
+Welcome to an example chapter event.[NL]
+Here, we will go through many of the[NL]
+possible things that can be done[NL]
+in a chapter.[A][NL]
+You may use this as an example for[NL]
+making events in the future.[A][X]
+
 # 0x0900 PrologueTestText
 [OpenMidLeft]This is a custom prologue event.[A][NL]
 [OpenMidLeft]Let's make sure the text shows correctly![A][X]
+
+# 0x0901 PrologueNarratorText1
+This is the narrator's text.[A][X]

@@ -1,3 +1,7 @@
+// Helpers
+
+#define Coords(xcoord,ycoord) "(ycoord<<16)|xcoord"
+
 // Events
 
 #define PrologueEvent 0x65

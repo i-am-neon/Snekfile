@@ -2138,11 +2138,6 @@ World map
    WM_WAITFORFXCLEAR2 
 
  Text
-  FE6:
-   TEXTBOXTOBOTTOM 
-
-   Put text box to the bottom.
-
   FE8:
    WM_SHOWTEXTWINDOW Value1 Speed Speed/Fade 
 

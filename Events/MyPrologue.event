@@ -38,7 +38,8 @@ ENDTRAP
 ALIGN 4
 
 Units:
-UNIT Eirika EirikaLord 0x00 Level(1,Ally,False) [5,7] 0x00 0x00 0x00 0x00 [IronSword] [0x00,0x00]
+UNIT Eirika EirikaLord 0x00 Level(1,Ally,False) [0,0] 0x00 0x00 0x00 0x00 [IronSword] [0x00,0x00]
+UNIT Seth Paladin 0x00 Level(1,Ally,False) [1,1] 0x00 0x00 0x00 0x00 [SilverLance] [0x00,0x00]
 UNIT
 
 ORG $9EEBE8 // Only for use in Prologue, so it uses this prologue instead of the vanilla one.
@@ -48,6 +49,10 @@ EVBIT_T 0x08    // Disables tutorial mode
 LOAD1 0x01 Units     // Loads your units onto the map
 ENUN            // Waits for unit loading to finish
 FADU 10         // Fades in (adjust timing as needed)
+SVAL 0xB Coords(30,50) // Center the tutorial text box
+TUTORIALTEXTBOXSTART
+TEXTSHOW Prologue_NarratorOpening
+TEXTEND
 TEXTSTART
 TEXTSHOW PrologueTestText
 TEXTEND
