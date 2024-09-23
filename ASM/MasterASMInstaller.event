@@ -5,8 +5,8 @@
 #include "HPBars/HPBars.event"
 
 
-// ALIGN 4
-// #include "ShowHealAmount/ShowHealAmount.event"
+ALIGN 4
+#include "ShowHealAmount/ShowHealAmount.event"
 
 
 //Skip very begining world map
