@@ -15,52 +15,12 @@ making events in the future.[A][X]
 My name is Seth. Because this text comes after the MidRight, it will be on the right side of the screen, as if Seth is saying it.
 [MidLeft]This text will show from the left side of the screen, as if Eirika is saying it.
 [FarFarLeft]This text will show from the far far left side of the screen. Since there was no face loaded with it, it appears as if a character from off screen is saying it.
-[MidRight]We can close out the text box now.[X]
-
-## Prologue_EirikaSethBeginningTalk1
-[OpenMidLeft][LoadEirika][OpenMidRight][LoadSeth]Everything is all[.][NL]
-right now, Lute.[A][OpenMidLeft][ToggleMouthMove]......[ToggleMouthMove][A][OpenMidRight]Lute?[.][A][OpenMidLeft]Your flesh shows no sign of putrefaction.[.][A][NL]
-[MidRight]We can close out the text box now.[X]
-
-# 0x0903 PrologueBeginningText
-# [FarFarLeft] | [FarLeft] [MidLeft] [Left] x [Right] [MidRight] [FarRight] | [FarFarRight]
-[FarLeft][LoadEirika]Hey.[A]
-[FarRight][LoadEirika]
-# ---------------------------------------------
-Hey, there[TMM]...[....][TMM][CloseEyes] How are you?[......] I hope you're well![NL]
-I'm trying to find the maximum line length.[OpenEyes][A][CloseSpeech][MoveRight]
-[FarLeft][Smile]I'm helping![A][CloseSpeech]
-[Right][ClearFace][FarLeft]I'm still helping.[A][X]
-
-## Prologue_LuteTalk
-[OpenMidRight][LoadFace][0x1A][0x01][OpenMidLeft][LoadFace][0x10][0x01][OpenMidRight]Everything is all[.][NL]
-right now, Lute.[A][OpenMidLeft][ToggleMouthMove]......[ToggleMouthMove][A][OpenMidRight]Lute?[.][A][OpenMidLeft]Your flesh shows no sign of putrefaction.[.][A][NL]
-It seems you're not a revenant.[.][A][OpenMidRight]Well, I should hope not![A][0x02][NL]
-However, I'm obliged to help the ones[.][NL]
-who aided me against those fiends.[A][NL]
-So I'm afraid I'll be leaving you and[.][NL]
-traveling with them for a while.[A][NL]
-What will you do, Lute?[.][A][OpenMidLeft]That's a good question. A very good[.][NL]
-question indeed. Hmm[ToggleMouthMove]...[.][ToggleMouthMove][A][NL]
-It's decided. I'll join you, Artur.[.][A][NL]
-After all, who wouldn't appreciate the[NL]
-help of a mage such as myself?[A][NL]
-[ToggleSmile]There's no one better than me.[A][ToggleSmile][X]
-
-## Military6AcceptRetreatLeaveInsideText
-[ConversationText]
-[MidLeft][LoadEirika][MidRight][LoadSeth]
-Yeah, it looks like the place hasn't been touched in centuries.
-[MidLeft]It's in surprisingly good condition though...
-[MidRight]Yeah. But look there. The gate is sealed. I can't imagine any researchers would have re-sealed it had they investigated this place before now.
-[MidLeft]Yeah. Doesn't look particularly hard to breach that gate, either. A temple this size must have some sort of artifact in it...
-[MidRight]It looks uninhabited.
-[MidLeft]Hm... Get the others. We're going to be heading in to see what we can find.
-[MidRight]I'm on it.
-[MidLeft]By the way, Derek...
-[MidRight]Yeah?
-[MidLeft]Thanks for trusting me on this.
-[MidRight]Hey, I don't want to end up as a corpse on the front lines anyway. Your plan makes sense to me.
-[MidLeft]Right. Thanks.
-[MidRight]Anyway, I'll go fetch the others. Maybe Zaheva will know something about this place.
-[MidLeft]Yeah maybe.[X]
+[MidLeft]When making a character pause[Beat]the Beat command will insert an ellipses in their text bubble and stop their mouth moving during that time.
+[FarRight][LoadMoulder]Hey, my portrait just entered the scene.
+[MidRight]If I talk now, my portrait will automatically be shown in front of the FarRight portrait.
+[FarRight]Now I'm going to leave the scene with Clear.[Clear]
+[MidRight]For closing eyes and smiling, it's best practice to have them last for a bit before closing them again. This way, the player can see the change in expression before the text auto-advances. [CloseEyes]Close a character's eyes like this. They will stay closed until you open them again.
+[MidLeft]You can also make units smile with ToggleSmile. [ToggleSmile]Right now I'm smiling! I'll keep smiling until you ToggleSmile again.
+[MidRight][OpenEyes]Return the character's eyes to normal open and blinking eyes like this.
+[MidLeft][ToggleSmile]Now I stopped smiling and look normal.
+[MidRight]If you want to show text that's important for the upcoming battle, you can[ToggleRed]make that text red[ToggleRed]to signify its importance. We can close out the text box with X.[X]

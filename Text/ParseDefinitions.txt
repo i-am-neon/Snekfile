@@ -70,3 +70,6 @@
 [LoadEirika] = [LoadFace][0x02][0x01]
 [LoadEirikaEyesClosed] = [LoadFace][0x03][0x01]
 [LoadSeth] = [LoadFace][0x04][0x01]
+[LoadGilliam] = [LoadFace][0x05][0x01]
+[LoadFranz] = [LoadFace][0x06][0x01]
+[LoadMoulder] = [LoadFace][0x07][0x01]
