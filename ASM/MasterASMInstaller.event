@@ -2,7 +2,7 @@
 #include "AutoNewline/Installer.event"
 
 
-// #include "HPBars/HPBars.event"
+#include "HPBars/HPBars.event"
 
 
 // ALIGN 4
