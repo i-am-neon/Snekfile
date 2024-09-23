@@ -10,17 +10,18 @@ making events in the future.[A][X]
 ## Prologue_EirikaSethBeginningTalk
 # All text outside of battle must start with [ConversationText] and end with [X]. Text within a battle must start with [BattleText] and end with [X].
 # With any text that have [ConversationText] or [BattleText], you do not need to add any newline characters or characters that signify the player needs to press "A". This is all handled automatically.
+# Portrait position options: [FarFarLeft], [FarLeft], [MidLeft], [Left], [Right], [MidRight], [FarRight], [FarFarRight]
 [ConversationText]
-[MidLeft][LoadEirika][MidRight][LoadSeth]
-My name is Seth. Because this text comes after the MidRight, it will be on the right side of the screen, as if Seth is saying it.
-[MidLeft]This text will show from the left side of the screen, as if Eirika is saying it.
+[Left][LoadEirika][Right][LoadSeth]
+My name is Seth. Because this text comes after the Right, it will be on the right side of the screen the bubble coming from whoever is in the Right position, as if Seth is saying it.
+[Left]This text will show from the left side of the screen, as if Eirika is saying it.
 [FarFarLeft]This text will show from the far far left side of the screen. Since there was no face loaded with it, it appears as if a character from off screen is saying it.
-[MidLeft]When making a character pause[Beat]the Beat command will insert an ellipses in their text bubble and stop their mouth moving during that time.
+[Left]When making a character pause[Beat]the Beat command will insert an ellipses in their text bubble and stop their mouth moving during that time.
 [FarRight][LoadMoulder]Hey, my portrait just entered the scene.
-[MidRight]If I talk now, my portrait will automatically be shown in front of the FarRight portrait.
+[Right]If I talk now, my portrait will automatically be shown in front of the FarRight portrait.
 [FarRight]Now I'm going to leave the scene with Clear.[Clear]
-[MidRight]For closing eyes and smiling, it's best practice to have them last for a bit before closing them again. This way, the player can see the change in expression before the text auto-advances. [CloseEyes]Close a character's eyes like this. They will stay closed until you open them again.
-[MidLeft]You can also make units smile with ToggleSmile. [ToggleSmile]Right now I'm smiling! I'll keep smiling until you ToggleSmile again.
-[MidRight][OpenEyes]Return the character's eyes to normal open and blinking eyes like this.
-[MidLeft][ToggleSmile]Now I stopped smiling and look normal.
-[MidRight]If you want to show text that's important for the upcoming battle, you can[ToggleRed]make that text red[ToggleRed]to signify its importance. We can close out the text box with X.[X]
+[Right]For closing eyes and smiling, it's best practice to have them last for a bit before closing them again. This way, the player can see the change in expression before the text auto-advances. [CloseEyes]Close a character's eyes like this. They will stay closed until you open them again.
+[Left]You can also make units smile with ToggleSmile. [ToggleSmile]Right now I'm smiling! I'll keep smiling until you ToggleSmile again.
+[Right][OpenEyes]Return the character's eyes to normal open and blinking eyes like this.
+[Left][ToggleSmile]Now I stopped smiling and look normal.
+[Right]If you want to show text that's important for the upcoming battle, you can[ToggleRed]make that text red[ToggleRed]to signify its importance. We can close out the text box with X.[X]
