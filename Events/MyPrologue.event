@@ -51,17 +51,12 @@ EVBIT_T 0x08    // Prologue only: Disables tutorial mode
 LOAD1 0x01 Units     // Loads your units onto the map
 ENUN            // Waits for unit loading to finish
 FADU 10         // Fades in (adjust timing as needed)
-Text(Military6AcceptRetreatLeaveInsideText)
-// SVAL 0xB Coords(30,50) // Center the tutorial text box
-// TUTORIALTEXTBOXSTART // Yellow standalone text box
-// TEXTSHOW Prologue_NarratorOpening
-// TEXTEND
-// TEXTSTART
-// TEXTSHOW Prologue_EirikaSethBeginningTalk
-// TEXTEND
-// TEXTSTART
-// TEXTSHOW Prologue_LuteTalk
-// TEXTEND
+SVAL 0xB Coords(20,50) // Center the tutorial text box
+TUTORIALTEXTBOXSTART // Yellow standalone text box
+TEXTSHOW Prologue_NarratorOpening // TEXTSHOW is to be used to put the text inside the TUTORIALTEXTBOXSTART
+TEXTEND        // Ends the text box
+
+Text(Outside_Village_Day,Prologue_EirikaSethBeginningTalk) // The "Text(<background>,<text>)" command is used to display normal conversation text. If no background is specified, the text will be displayed over the map. All background options are in the "result.post" file.
 REMA            // Removes text boxes and portraits
 ENDA            // Ends the event
 

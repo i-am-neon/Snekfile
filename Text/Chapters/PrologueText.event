@@ -1,4 +1,5 @@
 ## Prologue_NarratorOpening
+# Because we're not using [ConversationText] or [BattleText], we need to add the newline characters and characters that signify the player needs to press "A" manually. This is only necessary when using "TUTORIALTEXTBOXSTART"
 Welcome to an example chapter event.[NL]
 Here, we will go through many of the[NL]
 possible things that can be done[NL]
@@ -7,10 +8,13 @@ You may use this as an example for[NL]
 making events in the future.[A][X]
 
 ## Prologue_EirikaSethBeginningTalk
-[OpenMidLeft][LoadEirika][OpenMidRight][LoadSeth]
-My name is Seth. Because this text comes after the MidRight, it will[NL]
-be on the right side of the screen, as if Seth is saying it.[A]
-[MidLeft]This text will show from the left side of the screen, as if Eirika is saying it.[A]
+# All text outside of battle must start with [ConversationText] and end with [X]. Text within a battle must start with [BattleText] and end with [X].
+# With any text that have [ConversationText] or [BattleText], you do not need to add any newline characters or characters that signify the player needs to press "A". This is all handled automatically.
+[ConversationText]
+[MidLeft][LoadEirika][MidRight][LoadSeth]
+My name is Seth. Because this text comes after the MidRight, it will be on the right side of the screen, as if Seth is saying it.
+[MidLeft]This text will show from the left side of the screen, as if Eirika is saying it.
+[FarFarLeft]This text will show from the far far left side of the screen. Since there was no face loaded with it, it appears as if a character from off screen is saying it.
 [MidRight]We can close out the text box now.[X]
 
 ## Prologue_EirikaSethBeginningTalk1
