@@ -49,13 +49,17 @@ EVBIT_T 0x08    // Disables tutorial mode
 LOAD1 0x01 Units     // Loads your units onto the map
 ENUN            // Waits for unit loading to finish
 FADU 10         // Fades in (adjust timing as needed)
-SVAL 0xB Coords(30,50) // Center the tutorial text box
-TUTORIALTEXTBOXSTART
-TEXTSHOW Prologue_NarratorOpening
-TEXTEND
-TEXTSTART
-TEXTSHOW PrologueTestText
-TEXTEND
+Text(Military6AcceptRetreatLeaveInsideText)
+// SVAL 0xB Coords(30,50) // Center the tutorial text box
+// TUTORIALTEXTBOXSTART // Yellow standalone text box
+// TEXTSHOW Prologue_NarratorOpening
+// TEXTEND
+// TEXTSTART
+// TEXTSHOW Prologue_EirikaSethBeginningTalk
+// TEXTEND
+// TEXTSTART
+// TEXTSHOW Prologue_LuteTalk
+// TEXTEND
 REMA            // Removes text boxes and portraits
 ENDA            // Ends the event
 

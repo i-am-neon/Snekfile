@@ -6,9 +6,57 @@ in a chapter.[A][NL]
 You may use this as an example for[NL]
 making events in the future.[A][X]
 
-# 0x0900 PrologueTestText
-[OpenMidLeft]This is a custom prologue event.[A][NL]
-[OpenMidLeft]Let's make sure the text shows correctly![A][X]
+## Prologue_EirikaSethBeginningTalk
+[OpenMidLeft][LoadEirika][OpenMidRight][LoadSeth]
+My name is Seth. Because this text comes after the MidRight, it will[NL]
+be on the right side of the screen, as if Seth is saying it.[A]
+[MidLeft]This text will show from the left side of the screen, as if Eirika is saying it.[A]
+[MidRight]We can close out the text box now.[X]
 
-# 0x0901 PrologueNarratorText1
-This is the narrator's text.[A][X]
+## Prologue_EirikaSethBeginningTalk1
+[OpenMidLeft][LoadEirika][OpenMidRight][LoadSeth]Everything is all[.][NL]
+right now, Lute.[A][OpenMidLeft][ToggleMouthMove]......[ToggleMouthMove][A][OpenMidRight]Lute?[.][A][OpenMidLeft]Your flesh shows no sign of putrefaction.[.][A][NL]
+[MidRight]We can close out the text box now.[X]
+
+# 0x0903 PrologueBeginningText
+# [FarFarLeft] | [FarLeft] [MidLeft] [Left] x [Right] [MidRight] [FarRight] | [FarFarRight]
+[FarLeft][LoadEirika]Hey.[A]
+[FarRight][LoadEirika]
+# ---------------------------------------------
+Hey, there[TMM]...[....][TMM][CloseEyes] How are you?[......] I hope you're well![NL]
+I'm trying to find the maximum line length.[OpenEyes][A][CloseSpeech][MoveRight]
+[FarLeft][Smile]I'm helping![A][CloseSpeech]
+[Right][ClearFace][FarLeft]I'm still helping.[A][X]
+
+## Prologue_LuteTalk
+[OpenMidRight][LoadFace][0x1A][0x01][OpenMidLeft][LoadFace][0x10][0x01][OpenMidRight]Everything is all[.][NL]
+right now, Lute.[A][OpenMidLeft][ToggleMouthMove]......[ToggleMouthMove][A][OpenMidRight]Lute?[.][A][OpenMidLeft]Your flesh shows no sign of putrefaction.[.][A][NL]
+It seems you're not a revenant.[.][A][OpenMidRight]Well, I should hope not![A][0x02][NL]
+However, I'm obliged to help the ones[.][NL]
+who aided me against those fiends.[A][NL]
+So I'm afraid I'll be leaving you and[.][NL]
+traveling with them for a while.[A][NL]
+What will you do, Lute?[.][A][OpenMidLeft]That's a good question. A very good[.][NL]
+question indeed. Hmm[ToggleMouthMove]...[.][ToggleMouthMove][A][NL]
+It's decided. I'll join you, Artur.[.][A][NL]
+After all, who wouldn't appreciate the[NL]
+help of a mage such as myself?[A][NL]
+[ToggleSmile]There's no one better than me.[A][ToggleSmile][X]
+
+## Military6AcceptRetreatLeaveInsideText
+[ConversationText]
+[MidLeft][LoadEirika][MidRight][LoadSeth]
+Yeah, it looks like the place hasn't been touched in centuries.
+[MidLeft]It's in surprisingly good condition though...
+[MidRight]Yeah. But look there. The gate is sealed. I can't imagine any researchers would have re-sealed it had they investigated this place before now.
+[MidLeft]Yeah. Doesn't look particularly hard to breach that gate, either. A temple this size must have some sort of artifact in it...
+[MidRight]It looks uninhabited.
+[MidLeft]Hm... Get the others. We're going to be heading in to see what we can find.
+[MidRight]I'm on it.
+[MidLeft]By the way, Derek...
+[MidRight]Yeah?
+[MidLeft]Thanks for trusting me on this.
+[MidRight]Hey, I don't want to end up as a corpse on the front lines anyway. Your plan makes sense to me.
+[MidLeft]Right. Thanks.
+[MidRight]Anyway, I'll go fetch the others. Maybe Zaheva will know something about this place.
+[MidLeft]Yeah maybe.[X]
