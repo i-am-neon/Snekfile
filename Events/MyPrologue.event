@@ -46,8 +46,8 @@ UNIT
 
 ORG $9EEBE8 // Only for use in Prologue, so it uses this prologue instead of the vanilla one.
 BeginningScene:
-ENUT 0x7A       // Marks the tutorial as completed to disable it
-EVBIT_T 0x08    // Disables tutorial mode
+ENUT 0x7A       // Prologue only: Marks the tutorial as completed to disable it
+EVBIT_T 0x08    // Prologue only: Disables tutorial mode
 LOAD1 0x01 Units     // Loads your units onto the map
 ENUN            // Waits for unit loading to finish
 FADU 10         // Fades in (adjust timing as needed)
