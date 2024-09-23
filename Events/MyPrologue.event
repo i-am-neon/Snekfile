@@ -41,7 +41,7 @@ Units:
 UNIT Eirika EirikaLord 0x00 Level(1,Ally,False) [5,7] 0x00 0x00 0x00 0x00 [IronSword] [0x00,0x00]
 UNIT
 
-ORG $9EEBE8
+ORG $9EEBE8 // Only for use in Prologue, so it uses this prologue instead of the vanilla one.
 BeginningScene:
 ENUT 0x7A       // Marks the tutorial as completed to disable it
 EVBIT_T 0x08    // Disables tutorial mode
