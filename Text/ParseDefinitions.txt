@@ -62,6 +62,11 @@
 
 [LoadCurrent] = [LoadFace][0xFF][0xFF]
 
+// ASM Auto Newline
+[ConversationText] = [0x90]
+[BattleText] = [0x91]
+
+// Characters
 [LoadEirika] = [LoadFace][0x02][0x01]
 [LoadEirikaEyesClosed] = [LoadFace][0x03][0x01]
 [LoadSeth] = [LoadFace][0x04][0x01]
