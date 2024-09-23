@@ -1,0 +1,2167 @@
+-------------------------------------------------
+-----------Basic language abilities--------------
+-------------------------------------------------
+
+Comments:
+ /**/ = Ingores everything between the **'s.
+  Example: 
+   MNCH /*Coment!!!11!!*/ 0x55 
+  will look the same to the assembler as:
+   MNCH 0x55  
+  The comments can be nested, meaning /*Co /*mm*/ ent*/ will be
+  commented out completely.
+
+ // = Ingores the rest of the line
+  Example:
+   MNCH 0x55 //lol commentz!!11!! noob, ?!?!?!?!??!?!??!??! orly stfu u suck
+  will look the same to the assembler as:
+   MNCH 0x55
+
+Using labels: 
+ If the first word of a lines ends with :, it is considered to 
+ be a label. A label can be followed by normal code. The part 
+ before : is the labels name. Example:
+  randomName:
+ Label can be used in the code by placing it's name as the pointer 
+ parameter. Example:
+  POIN randomName
+
+Hex/dec/bin numbers.
+ Hex number must ALWAYS start with either 0x or $. Binary numbers
+ end with b or B. Othervise, the number will be interpretetted 
+ as dec. Letters in dec numbers will cause errors and values other than
+ 0 and 1 will cause errors bin numbers. 0x and $ are the same unless 
+ specified othervise. 
+
+Several codes on one line lines:
+ Adding ; to somewhere to a line will make assembler consider
+ the text after ; as a new code instead of parameters of the old code.
+ Note that line can have as many ; as you want.
+
+Arithmetics aka calculating aka math:
+ The following operations are supported:
+ +, -, *, /, %, &, |, ^, <<, >>
+ Dividing with zero naturally causes problems.
+ The following operations are being included, so don't use them
+ as part of names or codes:
+ !, ~
+
+Spelling mistakes:
+ Misspellers will be punished.
+ Muhahahahahahahahaaaaaaaaa!!!!1111!!!!!
+
+-----------------------------------------------
+----------------Preprocessor-------------------
+-----------------------------------------------
+
+Preprocessor is does exactly what you can deduce from the name, it
+will modify the code before passing it to the actual assembler.
+You can interact with preprocessor by using preprocessor commands,
+which you have several at your disposal. All preprocessor commands
+start with #, so they are easy to spot in code. Preprocessor is
+currently only available for assembly, so you won't see preprocessor
+related things in disassembled code.
+
+Defining stuff:
+ You can define a piece of text to mean something else with #define.
+ First parameter is the text that you are giving meaning to and the 
+ second is the real value. Note that using defined things as the
+ real value causes problems. Example:
+  #define Eliwood 1
+ This can be then used in your code like this:
+  IFCA 15 Eliwood
+ The defined name must be made of letters, numbers and underscore '_'.
+
+Definition files:
+ #define file *file path* 
+ The define files themselves are like this:
+  0x01 Eliwood EliwoodLord IronSword
+  0x02 Hector  LynLord     SlimSword
+ This defines Eliwood, EliwoodLord and IronSword as values 1 and
+ Hector, LynLord and SlimSword as values 2.
+
+Undefining:
+ You can use #undef to undefine something defined with
+ #define. Attempting to undefine something that hasn't been defined
+ is ignored.
+
+Checking if something is defined:
+ With #ifdef and #ifndef, you can check if something is defined
+ or not. #endif must be used to sign an end of #if check.
+ #else can be used between #if and #endif to react for opposite
+ result. #if's can stack.
+
+Automatically defined stuff:
+ Event assembler automatically defines _EA_. It also defines either
+ _FE6_, _FE7_ or _FE8_ depending on the selected game. Other defined
+ names are _line_ and _file_ that stand for current line and file,
+ respectably. Undefining or defining any of these leads to undefined 
+ behaviour.
+
+Including other files:
+ Using #include *filePath* you can include extra code and 
+ variable definitions from other files into this.
+
+Including a binary file:
+ You can include a binary file amongst the event assembly
+ with #incbin *file path*. This will copy all data from the
+ file into the part of the code where #incbin is used.
+
+Using double quotes:
+ Surrouding text with "" allows you to force them as single
+ parameter for preprosessor. In the actual code, they will be 
+ treated as normal characters.
+
+Macros:
+ Macros are defined like anything else, except they take parameters too.
+ Example:
+ #define Sieze(eventID,offset,X,Y) "LOCA eventID offset [X,Y] 0xF"
+ Separate parameters are separated by , in the macro definition.
+ After definition, the macro can be then used in the code like this:
+  Sieze(0x20,Sieze_Your_Mom,2,33)
+ And that will look to assembler like this:
+  LOCA 0x20 Sieze_Your_Mom [2,33] 0x0F
+ As with other defines, macros and their parameters must be made from
+ letters, numbers and underscore '_'.
+
+Adding and dumbing the pool:
+ You can add codes into the pool by using AddToPool macro:
+  AddToPool(code)
+ Then later in code you can dump the added line with #pool.
+ The AddToPool is then replaced with a label pointing to the
+ dumped code.
+
+Libraries:
+ Event Assembler Standard Library contains large amount of definitions
+ and macros to help you write code easier and help reduce repetition of 
+ common event structures. You can include EAstdlib by including
+ #include EAstdlib.event in your code. For further info, see EAstdlib.event
+ file, which is just normal text file you can open in text editor.
+ More libraries may be made in future, possibly by other authors.
+
+Built-in Macros:
+ There are some macros that are built into the Event Assembler itself
+ instead of being part of a library. The reason is simple, they can't 
+ be made any other way. These are:
+
+  AddToPool(code)
+   See: Adding and dumbing the pool
+   
+  IsDefined(name)
+   Returns 1 if the name is currently defined, else 0.
+     
+  ConstVector(param1, param2, ..., paramN)
+   Constructs a new vector from the parameters. Example:
+    ConstVector(1, 2, 3, 4, 5, 6, 7)
+   is processed to:
+    [1,2,3,4,5,6,7]
+   
+  DeconstVector(vector)   
+   The reverse of ConstVector, it takes a vector and returns it's 
+   coordinates seoparated by space. Example:
+    DeconstVector([1,2,3,4,5,6,7])
+   is processed to:
+    1 2 3 4 5 6 7
+    
+  ToParameters(vector)
+   Takes a vector and trims the [ and ] from it. Example:
+    ToParameters([1,2,3,4,5,6,7])
+   is processed to:
+    1,2,3,4,5,6,7
+    
+  Signum(value)
+   Takes a value and returns -1 if the values is negative,
+   1 if it's positive and 0 if it's 0.
+  
+  Switch(toSwitchOn, option1, option2,...,optionN)
+   Returns the option specified by the toSwitchOn.
+   If toSwitchOn is 1, then it returns option1, if 2
+   it returns to option2 and etc. Example:
+    Switch(4, 0, 0, 0, 1337, 9001, 9001, 9001)
+   is processed to:
+    1337
+   Attempting to access unspecified option leads
+   the macro getting replaced with empty string.
+
+  String(text)
+   Inserts text as ASCII encoded text.
+
+----------------------------------------
+----------------Codes-------------------
+----------------------------------------
+
+Special codes
+ ORG *Offset*
+  Changes the current offset of assembly. Note that if 
+  this isn't used, the compiler automatically starts to
+  assemble the code to offset 0, which will break the 
+  ROM utterly.
+  
+   Offset = Offset to change to. Can be either
+            smaller or larger than the previous offset.
+ 
+ CURRENTOFFSET
+  Not a code, but a value that can be used as a 
+  parameter by another code.
+ 
+ MESSAGE
+  Sends a message to post to Event Assembler.
+ 
+ ERROR
+  Sends a message to post as an error to Event Assembler.
+ 
+ WARNING
+  Sends a message to post as a warning to Event Assembler.
+ 
+ {
+ }
+  Starts and ends a label scope. Labels defined in a scope
+  are only available in child scopes.
+
+ ALIGN *value* 
+  Aligns current offset by adding to it if necessary. Most 
+  codes require an alignment of 4, so if you get an error
+  about offset not being divisible by a value, use ALIGN before 
+  that code to fix the error.
+
+   Value = The value to pad the offset to.
+
+ASM Code
+ FE8:
+  ASMC Offset 
+
+  Code that calls ASM routine in events.
+
+  Parameters:
+   Offset = Offset of the ASM routine. Thumb routines
+            need to be added 1.
+
+ FE8:
+  ASMC2 Offset 
+
+  Parameters:
+   Offset
+
+Camera
+ FE8:
+  CAM1 [Position X, Position Y] 
+  CAM1 Character 
+
+  Moves camera on chapter map.
+
+  Parameters:
+   Position = Position to move the camera to.
+   Character = Character to move the camera on.
+
+Conditional
+ Basic
+  FE8:
+   GOTO *Conditional ID* 
+
+   Unconditional GOTO (jump to LABEL *conditional ID*)
+
+   Parameters:
+    Conditional ID
+
+  FE8:
+   LABEL *Conditional ID* 
+
+   Labels (target for conditional branches)
+
+   Parameters:
+    Conditional ID
+
+  FE8:
+   CHECK_MODE 
+
+   These commands store the results of their checks to memory slot 0xC.
+   Some are boolean checks, and others store ints.
+   Checks for your mode; returns 0x1 for Prologue-C8, 0x2 for Eirika Mode, and 0x3 for Ephraim Mode.
+
+  FE8:
+   CHECK_HARD 
+
+   Boolean check for Difficult Mode.
+
+  FE8:
+   CHECK_TURNS 
+
+   Stores current turn number to slot 0xC.
+
+  FE8:
+   CHECK_ENEMIES 
+
+   Counts up number of enemies or NPCs on the map
+
+  FE8:
+   CHECK_OTHERS 
+
+  FE8:
+   CHECK_SKIRMISH 
+
+   Checks to see if you are in a skirmish or dungeon. Used for the Retreat command.
+
+  FE8:
+   CHECK_TUTORIAL 
+
+   Checks if tutorials are enabled (i.e. Easy Mode)
+
+  FE8:
+   CHECK_MONEY 
+
+   Stores your current amount of gold.
+
+  FE8:
+   CHECK_EVENTID 
+
+   Loads the Event ID associated with the current event to slot 0xC.
+
+  FE8:
+   CHECK_POSTGAME 
+
+   Checks your Mode byte; likely checks to see if you are in the postgame.
+
+  FE8:
+   CHECK_CHAPTER_NUMBER 
+
+   Get's the Chapter Number associated with the map/location you're on.
+
+  FE8:
+   BEQ *Conditional ID* *Memory Slot 1* *Memory Slot 2* 
+
+    These commands compare two memory slots and branch to LABEL *conditional ID* if the condition is met
+   Branch if equal
+
+   Parameters:
+    Conditional ID
+    Memory Slot 1
+    Memory Slot 2
+
+  FE8:
+   BNE *Conditional ID* *Memory Slot 1* *Memory Slot 2* 
+
+   Branch if not equal
+
+   Parameters:
+    Conditional ID
+    Memory Slot 1
+    Memory Slot 2
+
+  FE8:
+   BGE *Conditional ID* *Memory Slot 1* *Memory Slot 2* 
+
+   Branch if greater than or equal
+
+   Parameters:
+    Conditional ID
+    Memory Slot 1
+    Memory Slot 2
+
+  FE8:
+   BGT *Conditional ID* *Memory Slot 1* *Memory Slot 2* 
+
+   Branch if greater than
+
+   Parameters:
+    Conditional ID
+    Memory Slot 1
+    Memory Slot 2
+
+  FE8:
+   BLE *Conditional ID* *Memory Slot 1* *Memory Slot 2* 
+
+   Branch if less than or equal
+
+   Parameters:
+    Conditional ID
+    Memory Slot 1
+    Memory Slot 2
+
+  FE8:
+   BLT *Conditional ID* *Memory Slot 1* *Memory Slot 2* 
+
+   Branch if less than
+
+   Parameters:
+    Conditional ID
+    Memory Slot 1
+    Memory Slot 2
+
+ Chapter state conditions
+  FE8:
+   CHECK_EVENTID EventID 
+
+   Parameters:
+    EventID
+
+  FE8:
+   CHECK_EVBIT Bit 
+
+   Parameters:
+    Bit
+
+ Character conditions
+  FE8:
+   CHECK_ACTIVE 
+
+  FE8:
+   CHECK_EXISTS Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CHECK_STATUS Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CHECK_ALIVE Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CHECK_DEPLOYED Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CHECK_ACTIVEID Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CHECK_ALLEGIANCE Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CHECK_COORDS Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CHECK_CLASS Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CHECK_LUCK Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CHECK_AT [Position X, Position Y] 
+
+   Parameters:
+    Position
+
+  FE8:
+   CHECK_INAREA Char [TopLeftPos 1, TopLeftPos 2] [Size 1, Size 2] 
+
+   Parameters:
+    Char
+    TopLeftPos
+    Size
+
+Convos
+ Fade in or out
+  FE8:
+   FADI *Fade time* 
+
+   Fades in to dark.
+
+   Parameters:
+    Fade time = Amount of frames to use for fading.
+                Larger value means slower fading.
+
+  FE8:
+   FADU *Fade time* 
+
+   Fades out of dark.
+
+   Parameters:
+    Fade time = Amount of frames to use for fading.
+                Larger value means slower fading.
+
+  FE8:
+   FAWI *Fade time* 
+
+   Fades into white.
+
+   Parameters:
+    Fade time = Amount of frames to use for fading.
+                Larger value means slower fading.
+
+  FE8:
+   FAWU *Fade time* 
+
+   Fades out of white.
+
+   Parameters:
+    Fade time = Amount of frames to use for fading.
+                Larger value means slower fading.
+
+ Return from convo
+  FE8:
+   REMA 
+
+   Remove text bubbles, backgrounds and portraits
+   and returns to map.
+
+ Show backgrounds
+  FE8:
+   BACG Value1 
+
+   Shows background.
+
+   Parameters:
+    Background = Background to show.
+    Value1
+
+  FE8:
+   REMOVEPORTRAITS 
+
+ Text
+  FE8:
+   NOTIFY *Text ID* *Sound Effect* Value3 
+
+   Parameters:
+    Text ID
+    Sound Effect
+    Value3
+
+  FE8:
+   BROWNBOXTEXT *Text ID* [Text position X, Text position Y] 
+
+   Parameters:
+    Text ID
+    Text position
+
+  FE8:
+   TEXTSTART 
+
+   Starts the text showing.
+
+  FE8:
+   TUTORIALTEXTBOXSTART 
+
+  FE8:
+   SOLOTEXTBOXSTART 
+
+  FE8:
+   TEXTSHOW *Text ID* 
+
+   Shows text after TEXTSTART.
+
+   Parameters:
+    Text ID = Text to show.
+
+  FE8:
+   TEXTSHOW2 *Text ID* 
+
+   Parameters:
+    Text ID
+
+  FE8:
+   TEXTCONT 
+
+   Shows more text after TEXTSHOW.
+
+  FE8:
+   TEXTEND 
+
+   Ends text showing started by TEXTSTART.
+
+Cursor
+ FE8:
+  CUMO [Position X, Position Y] 
+  CUMO Character 
+ FE8:
+  CURE 
+ FE6:
+  CURE 
+ FE7:
+  CURE 
+
+  Remove cursor.
+
+End of event
+ FE8:
+  ENDA 
+
+  Ends an event.
+
+ FE8:
+  ENDB 
+
+Event ID manipulation
+ FE8:
+  ENUT EventID 
+
+  Marks event ID used. 
+
+  Parameters:
+   Event ID = Event ID to make used.
+              Event ID to make unused.
+   EventID
+
+ FE8:
+  ENUF EventID 
+
+  Makes event ID unused.
+
+  Parameters:
+   Event ID
+   EventID
+
+ FE8:
+  ENUT_SLOT2 
+
+ FE8:
+  ENUF_SLOT2 
+
+ FE8:
+  EVBIT_T Bit 
+
+  Parameters:
+   Bit
+
+ FE8:
+  EVBIT_F Bit 
+
+  Parameters:
+   Bit
+
+ FE8:
+  EVBIT_MODIFY *Operation to perform* 
+
+  Parameters:
+   Operation to perform
+
+Event execution manipulation
+ FE8:
+  CALL *Event pointer* 
+  CALL *Event pointer* 
+
+Item and money
+ Items
+  FE8:
+   SHLI Item1 Item2 ... ItemN
+
+   List of items used by a shop.
+
+   Parameters:
+    Item = Item for sale on the shop.
+
+  FE8:
+   GIVEITEMTO Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   GIVEITEMTOMAIN *Village or cutscene* 
+
+   Parameters:
+    Village or cutscene
+
+Location based event
+ FE8:
+  LOCA ID [Position X, Position Y] Command 
+  LOCA ID *Event Pointer* [Position X, Position Y] Command 
+  LOCA 
+
+  Location based events that happen when a unit is placed to
+  specified position and player selects the correct command from the menu.
+  Leaving Event pointer out and having ID as 3 causes the event to automatically
+  call the ending scene of the chapter.
+
+  Parameters:
+   ID = Event ID of the event. After the event ID has been used,
+        this event can't be invoked. Leaving this 0 will allow event to
+        whenever otherwise possible.
+   Position = Position of the event on the map.
+   Command = Command in the menu to use.
+   Event Pointer = Event to happen after the command has been chosen.
+
+ FE8:
+  CHESRANDOM ID *Item List Pointer* [Position X, Position Y] 
+
+  Parameters:
+   ID
+   Item List Pointer = Pointer to the item/probability list for this chest.
+                       The list is formatted as (Item ID,%chance) for each possible item and terminated by 00 00.
+                       Chances for all items should add up to 100%.
+   Position
+
+ FE8:
+  VILL ID *Event Pointer* [Position X, Position Y] Command 
+  VILL 
+
+  The location based event used for visiting villages.
+  A nearby map change happens automatically after this event.
+
+  Parameters:
+   ID = Event ID of the event. After the event ID has been used,
+        this event can't be invoked. Leaving this 0 will allow event to
+        whenever otherwise possible.
+   Event Pointer = Event to happen after the command has been chosen.
+   Position = Position of the event or in other words, village gate.
+   Command = Command in the menu to use. 
+
+ FE8:
+  SHOP ID *Shop List Pointer* [Position X, Position Y] Command 
+  SHOP 
+
+  Location based event that takes the player to a shop to buy items.
+
+  Parameters:
+   ID = Event ID of the event. After the event ID has been used,
+        this event can't be invoked. Leaving this 0 will allow event to
+        whenever otherwise possible.
+   Shop List Pointer = Pointer to SHLI code that has the items this shop sells.
+   Position = Position of the event aka the position of the shop.
+   Command = Command in the menu to use. Also determines whether shop is
+             secret shop, armory or plain shop.
+
+ FE8:
+  CHES ID *Chest data* [Position X, Position Y] Command 
+  CHES 
+
+  Location based event that gives items or money and causes a map change.
+
+  Parameters:
+   ID = Event ID of the event. After the event ID has been used,
+        this event can't be invoked. Leaving this 0 will allow event to
+        whenever otherwise possible.
+   Chest data = Chest data that determines both item and amount of money you get.
+   Position = Position of the event which is the position of the chest.
+   Command = Command in the menu to use.
+
+ FE8:
+  DOOR ID [Position X, Position Y] Command 
+  DOOR ID *Event Pointer* [Position X, Position Y] Command 
+  DOOR 
+
+  Location based event triggered by unit being placed near and choosing
+  the right command. Causes automatic map change if no Event pointer is 
+  specified. 
+
+  Parameters:
+   ID = Event ID of the event. After the event ID has been used,
+        this event can't be invoked. Leaving this 0 will allow event to
+        whenever otherwise possible.
+   Position = Position of the door.
+   Command = Command in the menu to use.
+   Event Pointer = Event to happen after the command has been chosen. map change does not
+                   automatically happen with if this parameter is used.
+
+Main codes
+ After event
+  FE8:
+   AFEV ID *Event Pointer* *Event ID to follow* 
+   AFEV 
+
+   Event that happens after another event happens.
+
+   Parameters:
+    ID = Event ID of the event. After the event ID has been used,
+         this event can't be invoked. Leaving this 0 will allow event to
+         whenever otherwise possible.
+    Event Pointer = Event to happen.
+    Event ID to follow = Event ID of the event this event will follow.
+
+ Area event
+  FE8:
+   AREA ID *Event Pointer* [Corner 1 1, Corner 1 2] [Corner 2 1, Corner 2 2] 
+   AREA 
+
+   Event that happens when a unit lands on specific tiles.
+
+   Parameters:
+    ID = Event ID of the event. After the event ID has been used,
+         this event can't be invoked. Leaving this 0 will allow event to
+         whenever otherwise possible.
+    Event Pointer = Event to happen.
+    Corner 1 = Topleft corner of the rectangle shaped area where the event is triggered.
+    Corner 2 = Bottom right corner of the area where the event is triggered.
+
+ Character based events
+  FE8:
+   CHAR 
+
+   Event that happens when two characters land next to each
+   other and talk convo is selected.
+
+   Parameters:
+    ID = Event ID of the event. After the event ID has been used,
+         this event can't be invoked. Leaving this 0 will allow event to
+         whenever otherwise possible.
+    Event Pointer = Pointer to event to happen.
+    Characters = Characters that participate in this event. First character
+                 is the one which needs to start this event. If you want
+                 both characters to be able to start this event, make
+                 another CHAR code with the exact same parameters except 
+                 characters are the other way around.
+    Extra = Extra conditions that can disallow the Talk option from
+            appearing. 0 means no extra condition.
+    Extra1 = Extra conditions that can disallow the Talk option from
+             appearing. 0 means no extra condition.
+    Extra2 = Extra conditions that can disallow the Talk option from
+             appearing. 0 means no extra condition.
+    Extra3 = Extra conditions that can disallow the Talk option from
+             appearing. 0 means no extra condition.
+    Extra4 = Extra conditions that can disallow the Talk option from
+             appearing. 0 means no extra condition.
+    Character 1 = Character to start the event.
+    Character 2 = The other character.
+
+ Location based event
+  FE8:
+   LOCA ID [Position X, Position Y] Command 
+   LOCA ID *Event Pointer* [Position X, Position Y] Command 
+   LOCA 
+
+   Location based events that happen when a unit is placed to
+   specified position and player selects the correct command from the menu.
+   Leaving Event pointer out and having ID as 3 causes the event to automatically
+   call the ending scene of the chapter.
+
+   Parameters:
+    ID = Event ID of the event. After the event ID has been used,
+         this event can't be invoked. Leaving this 0 will allow event to
+         whenever otherwise possible.
+    Position = Position of the event on the map.
+    Command = Command in the menu to use.
+    Event Pointer = Event to happen after the command has been chosen.
+
+  FE8:
+   VILL ID *Event Pointer* [Position X, Position Y] Command 
+   VILL 
+
+   The location based event used for visiting villages.
+   A nearby map change happens automatically after this event.
+
+   Parameters:
+    ID = Event ID of the event. After the event ID has been used,
+         this event can't be invoked. Leaving this 0 will allow event to
+         whenever otherwise possible.
+    Event Pointer = Event to happen after the command has been chosen.
+    Position = Position of the event or in other words, village gate.
+    Command = Command in the menu to use. 
+
+  FE8:
+   SHOP ID *Shop List Pointer* [Position X, Position Y] Command 
+   SHOP 
+
+   Location based event that takes the player to a shop to buy items.
+
+   Parameters:
+    ID = Event ID of the event. After the event ID has been used,
+         this event can't be invoked. Leaving this 0 will allow event to
+         whenever otherwise possible.
+    Shop List Pointer = Pointer to SHLI code that has the items this shop sells.
+    Position = Position of the event aka the position of the shop.
+    Command = Command in the menu to use. Also determines whether shop is
+              secret shop, armory or plain shop.
+
+  FE8:
+   CHES ID *Chest data* [Position X, Position Y] Command 
+   CHES 
+
+   Location based event that gives items or money and causes a map change.
+
+   Parameters:
+    ID = Event ID of the event. After the event ID has been used,
+         this event can't be invoked. Leaving this 0 will allow event to
+         whenever otherwise possible.
+    Chest data = Chest data that determines both item and amount of money you get.
+    Position = Position of the event which is the position of the chest.
+    Command = Command in the menu to use.
+
+  FE8:
+   DOOR ID [Position X, Position Y] Command 
+   DOOR ID *Event Pointer* [Position X, Position Y] Command 
+   DOOR 
+
+   Location based event triggered by unit being placed near and choosing
+   the right command. Causes automatic map change if no Event pointer is 
+   specified. 
+
+   Parameters:
+    ID = Event ID of the event. After the event ID has been used,
+         this event can't be invoked. Leaving this 0 will allow event to
+         whenever otherwise possible.
+    Position = Position of the door.
+    Command = Command in the menu to use.
+    Event Pointer = Event to happen after the command has been chosen. map change does not
+                    automatically happen with if this parameter is used.
+
+  FE8:
+   CHESRANDOM ID *Item List Pointer* [Position X, Position Y] 
+
+   Parameters:
+    ID
+    Item List Pointer = Pointer to the item/probability list for this chest.
+                        The list is formatted as (Item ID,%chance) for each possible item and terminated by 00 00.
+                        Chances for all items should add up to 100%.
+    Position
+
+ Others
+  FE8:
+   END_MAIN 
+
+   End of main code list.
+
+  FE8:
+   CLEAN 
+
+  FE8:
+   PREP 
+
+ Turn based event
+  FE8:
+   TURN ID *Event Pointer* [Turns 1, Turns 2] TurnMoment 
+  FE8:
+   TURN 
+
+   Turn based events that happen at a specific part of one or several turns.
+
+   Parameters:
+    ID = Event ID of the event. After the event ID has been used,
+         this event can't be invoked. Leaving this 0 will allow event to
+         whenever otherwise possible.
+    Event Pointer = Pointer to an event that happens on the turns.
+    Turns = Turns when the event happens. First coordinate is the first
+            turn the event happens on while the second is the first turn
+            the event stops happening. Event is is quaranteed to happen 
+            atleast once no matter what the second coordinate is.
+    TurnMoment = The turn moment where the event happens. 0 means at the beginning of 
+                 player phase, while 8 means at the beginning of the enemy phase and
+                 4 means at the beginning of the NPC phase.
+    Extra = Extra conditions for the event. 0 means no extra condition.
+    Extra1 = Extra conditions for the event. 0 means no extra condition.
+    Extra2 = Extra conditions for the event. 0 means no extra condition.
+    Extra3 = Extra conditions for the event. 0 means no extra condition.
+    Extra4 = Extra conditions for the event. 0 means no extra condition.
+
+Map
+ Change map
+  FE8:
+   TILECHANGE Value1 
+
+   Parameters:
+    Value1
+
+  FE8:
+   TILEREVERSE Value1 
+
+   Parameters:
+    Value1
+
+ Load map
+  FE8:
+   LOMA *Chapter ID* 
+
+   Loads a new map mid-event.
+
+   Parameters:
+    Chapter ID = Chapter whose map to load.
+    Position = Starting position of the camera on the new map.
+
+Memory manipulation
+ FE8:
+  SVAL *Memory slot* *Value to store* 
+
+  Parameters:
+   Memory slot
+   Value to store
+
+ FE8:
+  SETVAL *Memory slot* *Value to store* 
+
+  Parameters:
+   Memory slot
+   Value to store
+
+ FE8:
+  SMOV *Memory slot* *Value to store* 
+
+  Parameters:
+   Memory slot
+   Value to store
+
+ FE8:
+  SADD Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SSUB Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SMUL Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SDIV Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SMOD Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SAND Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SORR Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SXOR Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SLSL Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SLOTS_LEFTSHIFT Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SLSR Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SLOTS_RIGHTSHIFT Slots 
+
+  Parameters:
+   Slots
+
+ FE8:
+  SLOTS_SETFROMQUEUE *Memory Slot* 
+
+  Parameters:
+   Memory Slot
+
+ FE8:
+  SAVETOQUEUE 
+
+ FE8:
+  STQFROMSLOT *Memory Slot* 
+
+  Parameters:
+   Memory Slot
+
+ FE8:
+  COUNTER_CHECK value1 
+
+  Parameters:
+   value1
+
+ FE8:
+  COUNTER_SET *Bitshift value* *Counter value* 
+
+  Parameters:
+   Bitshift value
+   Counter value
+
+ FE8:
+  COUNTER_ADD *Bitshift value* *Base operand* 
+
+  Parameters:
+   Bitshift value
+   Base operand
+
+ FE8:
+  COUNTER_SUBTRACT *Bitshift value* *Base operand* 
+
+  Parameters:
+   Bitshift value
+   Base operand
+
+Miscellaneous
+ Display Movement Range
+  FE8:
+   SHOW_ATTACK_RANGE Char 
+
+   Parameters:
+    Char
+
+  FE8:
+   HIDE_ATTACK_RANGE 
+
+ Misc
+  FE8:
+   RANDOMNUMBER *Maximum Number* 
+
+   Parameters:
+    Maximum Number
+
+ Screen Effects
+  FE8:
+   STARTFADE 
+
+  FE8:
+   ENDFADE 
+
+  FE8:
+   FADECOLORS Target Speed Red Green Blue 
+
+   Parameters:
+    Target
+    Speed
+    Red
+    Green
+    Blue
+
+  FE8:
+   EARTHQUAKE_START Value1 
+
+   Parameters:
+    Value1
+
+  FE8:
+   EARTHQUAKE_END 
+
+  FE8:
+   GLOWING_CROSS Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   END_GLOWING_CROSS 
+
+  FE8:
+   BREAKING_SACRED_STONE Character 
+
+   Parameters:
+    Character
+
+Move to chapter
+ FE8:
+  MNCH *Chapter ID* 
+
+  Moves to a chapter through save-dialog.
+
+  Parameters:
+   Chapter ID = Chapter to move to.
+
+ FE8:
+  MNC2 *Chapter ID* 
+
+  Moves to a chapter directly.
+
+  Parameters:
+   Chapter ID = Chapter to move to.
+
+ FE8:
+  MNC3 *Chapter ID* 
+
+  Parameters:
+   Chapter ID
+
+ FE8:
+  MNC4 Value1 
+
+  Parameters:
+   Value1
+
+ FE8:
+  MNTS Value1 
+
+  Parameters:
+   Value1
+
+Moving
+ FE8:
+  MOVE Speed Character [Position to move to X, Position to move to Y] 
+
+  Moves a unit on chapter map.
+
+  Parameters:
+   Old position = Position of the unit to move.
+   New position = Position to move the unit to.
+   Character = Character ID of the unit to move.
+   Move manual pointer = Pointer to MOMA codes that control moving.
+   Speed = Speed in which the unit moves in.
+   Position to move to
+
+ FE8:
+  MOVEONTO Speed Mover *Target Character* 
+
+  Parameters:
+   Speed
+   Mover
+   Target Character
+
+ FE8:
+  MOVE_1STEP Speed Character Direction 
+
+  Parameters:
+   Speed
+   Character
+   Direction
+
+Music and sound
+ Change music
+  FE8:
+   MUSC *Music ID* 
+
+   Changes music.
+
+   Parameters:
+    Music ID = Music to change to.
+
+  FE8:
+   MUSS *Music ID* 
+
+   Changes music while saving the previous song
+   so you can restore it with MURE.
+
+   Parameters:
+    Music ID = Music to change to.
+
+  FE8:
+   MUSCFAST Value1 
+
+   Changes music.
+   Music to change to.
+
+   Parameters:
+    Value1
+
+  FE8:
+   MUSCMID Value1 
+
+   Parameters:
+    Value1
+
+  FE8:
+   MUSCSLOW Value1 
+
+   Parameters:
+    Value1
+
+  FE8:
+   SUDDENMUS Value1 
+
+   Parameters:
+    Value1
+
+ Change volume
+  FE8:
+   MUSI 
+
+   Makes music quieter.
+
+  FE8:
+   MUNO 
+
+   Makes music normal after MUSI.
+
+Pointer
+ FE8:
+  POIN Offset 
+
+  Makes a GBA pointer pointing to offset.
+
+  Parameters:
+   Offset = Offset to point to.
+
+ FE8:
+  POIN2 Offset 
+
+  Makes a GBA pointer pointing to offset without requiring word alignment.
+
+  Parameters:
+   Offset = Offset to point to.
+
+Raw code
+ FE8:
+  WORD Value 
+
+  4 byte raw value
+
+  Parameters:
+   Value = Value
+
+ FE8:
+  SHORT Value 
+
+  2 byte raw value
+
+  Parameters:
+   Value = Value
+
+ FE8:
+  BYTE Value 
+
+  1 byte raw value
+
+  Parameters:
+   Value = Value
+
+Stall
+ FE8:
+  STAL *Time to stall* 
+
+  Halts event execution for a while.
+  Things like unit movement, animations
+  and others continue normally while stalled.
+
+  Parameters:
+   Time to stall = Amount of frames to stall.
+
+ FE8:
+  STAL2 Value1 
+
+  Parameters:
+   Value1
+
+ FE8:
+  STAL3 Value1 
+
+  Parameters:
+   Value1
+
+Traps
+ FE8:
+  BLST [Position X, Position Y] Type 
+  BLST 
+
+  Ballista data.
+  Parameterles version ends a list of ballista data.
+
+  Parameters:
+   Position = Position of the ballista
+   Type = Type of the ballista
+
+ FE8:
+  ENDTRAP 
+
+ FE8:
+  FIRE [Position X, Position Y] Type [Size 1, Size 2] 
+
+  Fire trap.
+
+  Parameters:
+   Position = Position of the trap
+   Type = Type of the trap
+   Size = Size of the trap
+
+ FE8:
+  ARROW [X coordinate X, X coordinate Y] [Size 1, Size 2] 
+
+  Parameters:
+   X coordinate = Position of the trap
+   Size = Size of the trap
+
+ FE8:
+  EGG [Position X, Position Y] Unknown Unknown2 
+
+  Gorgon egg
+
+  Parameters:
+   Position = Position of the trap
+   Unknown = Direction of the trap
+   Unknown2 = Size of the trap
+
+Units
+ Change AI
+  FE8:
+   CHAI Character 
+   CHAI [Coordinates X, Coordinates Y] 
+
+   Changes the AI of a unit.
+
+   Parameters:
+    Character = Character whose AI to change.
+    AI = Changes AI.
+    AI 1 = Changes AI.
+    AI 2 = Changes AI.
+    AI 3 = Changes AI.
+    AI 4 = Changes AI.
+    Position = Position of the unit whose AI to change.
+    Coordinates
+
+  FE8:
+   CHAI2 
+
+ Change affiliation
+  FE8:
+   CUSA Character 
+
+   Changes units affiliation to ally.
+
+   Parameters:
+    Character = Character whose affiliation to change.
+
+  FE8:
+   CUSE Character 
+
+   Changes units affiliation to enemy.
+
+   Parameters:
+    Character = Character whose affiliation to change.
+
+  FE8:
+   CUSN Character 
+
+   Changes units affiliation to neutral.
+
+   Parameters:
+    Character = Character whose affiliation to change.
+
+ Change unit condition
+  FE8:
+   SET_HP Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   SET_ENDTURN Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   SET_STATE Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   SET_SOMETHING Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   DISA_IF Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   SET_ACTIVE Char 
+
+   Parameters:
+    Char
+
+  FE8:
+   RECLASS Char Class 
+
+   Parameters:
+    Char
+    Class
+
+  FE8:
+   RECLASS_FROMCHAR Char From 
+
+   Parameters:
+    Char
+    From
+
+  FE8:
+   SWITCH_CLASSES Char1 Char2 
+
+   Parameters:
+    Char1
+    Char2
+
+ Disappear
+  FE8:
+   DISA Character 
+
+   Removes character from the map.
+
+   Parameters:
+    Character = Character to remove.
+    Position = Position of the character to remove.
+
+  FE8:
+   REMU Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CLEA Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CLEN Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   CLEE Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   INVIS Character 
+
+   Parameters:
+    Character
+
+ End of unit changing
+  FE8:
+   ENUN 
+
+   Makes game wait until movement, loading and other 
+   unit changing events end.
+
+ Fighting
+  FE8:
+   FIG1 Attacker Defender Unknown 
+
+   Starts a fight between 2 units.
+
+   Parameters:
+    Attacker = Character ID of the attacker.
+    Defender = Character ID of the defender.
+    Unknown = Unknown
+
+  FE8:
+   FIG2 Attacker Defender Unknown 
+
+   Starts a fight between 2 units.
+
+   Parameters:
+    Attacker = Character ID of the attacker.
+    Defender = Character ID of the defender.
+    Unknown = Unknown
+
+  FE8:
+   FIG3 Attacker Defender Unknown 
+
+   Scripts the details of the next fight.
+
+   Parameters:
+    Attacker = Leave as 0
+    Defender = Leave as 0
+    Unknown = Unknown. Leave as 0
+
+ Give Items
+  FE8:
+   GIVETO Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   GIVETOMAIN *Village or cutscene* 
+
+   Parameters:
+    Village or cutscene
+
+  FE8:
+   GIVETOSLOT3 
+
+ Killing
+ Loading
+  FE8:
+   LOAD1 Dunno Pointer 
+
+   Parameters:
+    Dunno
+    Pointer
+
+  FE8:
+   LOAD_SLOT1 Dunno 
+
+   Parameters:
+    Dunno
+
+  FE8:
+   LOAD2 Value1 Pointer 
+
+   Parameters:
+    Value1
+    Pointer
+
+  FE8:
+   LOAD3 Value1 Pointer 
+
+   Parameters:
+    Value1
+    Pointer
+
+  FE8:
+   LOAD4 Value1 
+
+   Parameters:
+    Value1
+
+  FE8:
+   SPAWN_ALLY Char [Position X, Position Y] 
+
+   Parameters:
+    Char
+    Position
+
+  FE8:
+   SPAWN_NPC Char [Position X, Position Y] 
+
+   Parameters:
+    Char
+    Position
+
+  FE8:
+   SPAWN_ENEMY Char [Position X, Position Y] 
+
+   Parameters:
+    Char
+    Position
+
+  FE8:
+   SPAWN_CUTSCENE_ALLY Char [Position X, Position Y] 
+
+   Parameters:
+    Char
+    Position
+
+ Moving
+  FE8:
+   MOVE Speed Character [Position to move to X, Position to move to Y] 
+
+   Moves a unit on chapter map.
+
+   Parameters:
+    Old position = Position of the unit to move.
+    New position = Position to move the unit to.
+    Character = Character ID of the unit to move.
+    Move manual pointer = Pointer to MOMA codes that control moving.
+    Speed = Speed in which the unit moves in.
+    Position to move to
+
+  FE8:
+   MOVEONTO Speed Character *Target Character* 
+
+   Parameters:
+    Speed
+    Character
+    Target Character
+
+  FE8:
+   MOVE_1STEP Speed Character Direction 
+
+   Parameters:
+    Speed
+    Character
+    Direction
+
+  FE8:
+   MOVEFORCED Value1 Character Value3 
+
+   Parameters:
+    Value1
+    Character
+    Value3
+
+ Promote
+  FE8:
+   PROM Character Class Item 
+
+   Promotes a unit.
+
+   Parameters:
+    Character = Character to promote.
+    Class = Class to promote the unit to.
+    Item = Promotion item
+
+ Reappear
+  FE8:
+   REVEAL Character 
+
+   Parameters:
+    Character
+
+  FE8:
+   RESUMM Value1 
+
+   Parameters:
+    Value1
+
+ Unit
+  FE8:
+   UNIT 
+   UNIT *Char ID* *Class ID* *Leader char* *Misc data* [Loading position X, Loading position Y] Flags Byte1 *Data count* *REDA data pointer* [Items 1, Items 2, Items 3, Items 4] [AI 1, AI 2] RecoveryAI DontMoveAI 
+   UNIT *Char ID* *Class ID* *Leader char* *Misc data* [Loading position X, Loading position Y] Flags Byte1 *Data count* *REDA data pointer* [Items 1, Items 2, Items 3, Items 4] [AI 1, AI 2, AI 3, AI 4] 
+   UNIT *Char ID* *Class ID* *Leader char* *Misc data* [Loading position X, Loading position Y] Flags Byte1 *Data count* *REDA data pointer* Items AI 
+   UNIT *Char ID* *Class ID* *Leader char* *Misc data* [Loading position X, Loading position Y] Flags Byte1 *Data count* *REDA data pointer* *Item 1* *Item 2* *Item 3* *Item 4* *AI 1* *AI 2* *AI 3* *AI 4* 
+
+   Unit data that controls units that can be loaded to chapter maps.
+   Parameterless version is the end of UNIT list.
+
+   Parameters:
+    Char ID = Character ID of the unit.
+              Character ID of the unit.
+    Class ID = Class ID of the unit.
+               Class ID of the unit.
+    Leader char = Leader character of this unit. Leader character
+                  is usually either main lord or enemy boss.
+                  Leader character of this unit. Leader character
+                  is usually either main lord or enemy boss.
+    Misc data = Level, side and autoleveling of the unit.
+                Level, side and autoleveling of the unit.
+    Loading position = Position to load this unit.
+                       Position to load this unit.
+    Starting position = Position to move this unit to after loading.
+                        Position to move this unit to after loading.
+    Items = Starting inventory of this unit.
+            Starting inventory of this unit.
+    AI = Starting AI of this unit.
+         Starting AI of this unit.
+    RecoveryAI = Starting AI of this unit.
+    DontMoveAI = Starting AI of this unit.
+    Item 1 = Starting inventory of this unit.
+    Item 2 = Starting inventory of this unit.
+    Item 3 = Starting inventory of this unit.
+    Item 4 = Starting inventory of this unit.
+    AI 1 = Starting AI of this unit.
+    AI 2 = Starting AI of this unit.
+    Flags = Controls other details about this unit, like item dropping
+            and how the unit data is intepretted.
+            Controls other details about this unit, like item dropping
+            and how the unit data is intepretted.
+    Byte1 = Uniknown. Usually 0.
+            Uniknown. Usually 0.
+    Data count = Amount of REDA codes to use when loading this unit.
+                 Amount of REDA codes to use when loading this unit.
+    REDA data pointer = Pointer to REDA data which controls units 
+                        movement after loading.
+                        Pointer to REDA data which controls units 
+                        movement after loading.
+    AI 3
+    AI 4
+
+  FE8:
+   REDA [New position X, New position Y] Flags Speed *Rescuing character* Delay 
+   REDA [New position X, New position Y] Flags Speed *Rescuing character* Unknown Delay 
+
+   Controls how units move right after getting loaded to the map.
+
+   Parameters:
+    New position = Position to move the unit to.
+    Flags = Flags of the movement.
+    Speed = Speed of the movement.
+    Rescuing character = Unit this unit is rescuing. 0 if there is none.
+    Delay = Amount of time to pass before executing this code.
+    Unknown = Unknwon. Usually 0xFFFF.
+
+ Warp
+  FE8:
+   WARP_OUT 
+
+  FE8:
+   WARP_IN 
+
+Weather and fog
+ FE8:
+  VCWF *Vision distance* 
+
+  Changes vision distance.
+
+  Parameters:
+   Vision distance = Distance to change to.
+
+ FE8:
+  WEA1 *Weather type ID* 
+
+World map
+ Basic
+  FE8:
+   _SATURATE_COLORS Value1 Value2 Value3 
+
+   Parameters:
+    Value1
+    Value2
+    Value3
+
+  FE8:
+   WM_FADEOUT Value1 Value2 Value3 
+
+   Parameters:
+    Value1
+    Value2
+    Value3
+
+  FE8:
+   WM_SHOWDRAWNMAP Value1 X Y Map Value5 
+
+   Parameters:
+    Value1
+    X
+    Y
+    Map
+    Value5
+
+  FE8:
+   SKIPWN 
+
+   Skips world map event
+
+ Camera
+  FE8:
+   WM_SETCAM X-coordinate Y-coordinate 
+
+   Parameters:
+    X-coordinate
+    Y-coordinate
+
+  FE8:
+   WM_CENTERCAMONLORD 
+
+  FE8:
+   WM_MOVECAM val1 X Y val2 Speed Delay val3 
+
+   Parameters:
+    val1
+    X
+    Y
+    val2
+    Speed
+    Delay
+    val3
+
+  FE8:
+   WM_MOVECAMTO StartX StartY LocationID Speed Delay 
+
+   Parameters:
+    StartX
+    StartY
+    LocationID
+    Speed
+    Delay
+
+  FE8:
+   WM_MOVECAM2 Value1 *Starting X* *Starting Y* *Ending X* *Ending Y* Speed Delay 
+
+   Parameters:
+    Value1
+    Starting X
+    Starting Y
+    Ending X
+    Ending Y
+    Speed
+    Delay
+
+ Map
+  FE8:
+   WM_DRAWPATH Value1 PathID Value2 
+
+   Parameters:
+    Value1
+    PathID
+    Value2
+
+  FE8:
+   WM_DRAWPATH2 Value1 PathID Value2 
+
+   Parameters:
+    Value1
+    PathID
+    Value2
+
+  FE8:
+   WM_REMOVEPATH PathID 
+
+   Parameters:
+    PathID
+
+  FE8:
+   WM_LOADLOCATION2 Value1 LocationID Value2 
+
+   Parameters:
+    Value1
+    LocationID
+    Value2
+
+  FE8:
+   WM_REMOVELOCATION Value1 LocationID Value2 
+
+   Parameters:
+    Value1
+    LocationID
+    Value2
+
+  FE8:
+   WM_LOADLOCATION3 Value1 LocationID Value2 
+
+   Parameters:
+    Value1
+    LocationID
+    Value2
+
+  FE8:
+   DRAWPATH3 Value1 PathID Value3 
+
+   Parameters:
+    Value1
+    PathID
+    Value3
+
+  FE8:
+   WM_CREATENEXTDESTINATION 
+
+  FE8:
+   WM_SETDESTINATION Value1 LocationID Value3 
+
+   Parameters:
+    Value1
+    LocationID
+    Value3
+
+  FE8:
+   WM_HIGHLIGHT Value1 Region Value2 
+
+   Parameters:
+    Value1
+    Region
+    Value2
+
+  FE8:
+   WM_HIGHLIGHTCLEAR1 Value1 Region Value2 
+
+   Parameters:
+    Value1
+    Region
+    Value2
+
+  FE8:
+   WM_HIGHLIGHTCLEAR2 Value1 Region Value2 
+
+   Parameters:
+    Value1
+    Region
+    Value2
+
+  FE8:
+   WM_FXCLEAR1 Value1 Value2 Value3 
+
+   Parameters:
+    Value1
+    Value2
+    Value3
+
+  FE8:
+   WM_FXCLEAR2 Value1 Value2 Value3 
+
+   Parameters:
+    Value1
+    Value2
+    Value3
+
+ Map sprites
+  FE8:
+   PUTSPRITE ID Class Allegiance Dunno 
+
+   Places or moves a map sprite.
+
+   Parameters:
+    ID = ID of the sprite.
+    Position = Position of the sprite on the world map in pixels.
+    Class = Class of the sprite.
+    Sprite properties = Sprite colour, walking speed and whether camera follows it.
+    In-class ID = ID that separates srpites with same class.
+    Unknown
+    Unknown2
+    Allegiance = Colour of the sprite.
+    Dunno = Unknown.
+
+  FE8:
+   WM_MAKELORDVISIBLE Value1 
+
+   Parameters:
+    Value1
+
+  FE8:
+   WM_MAKELORDDISAPPEAR 
+
+  FE8:
+   WM_FADEINSPRITE Value1 Value2 Value3 
+
+   Parameters:
+    Value1
+    Value2
+    Value3
+
+  FE8:
+   WM_FADEOUTSPRITE Value1 Value2 Value3 
+
+   Parameters:
+    Value1
+    Value2
+    Value3
+
+  FE8:
+   WM_WAITFORSPRITELOAD 
+
+  FE8:
+   WM_PUTSPRITE ID ClassID Allegiance X Y 
+
+   Parameters:
+    ID
+    ClassID
+    Allegiance
+    X
+    Y
+
+  FE8:
+   WM_PUTMOVINGSPRITE Value1 ClassID Acceleration *Start X* *Start Y* *End X* *End Y* Time Flags Delay Value11 
+
+   Parameters:
+    Value1
+    ClassID
+    Acceleration
+    Start X
+    Start Y
+    End X
+    End Y
+    Time
+    Flags
+    Delay
+    Value11
+
+  FE8:
+   WM_MOVESPRITETO Value1 Value2 Value3 Value4 *Location ID* Time Delay 
+
+   Parameters:
+    Value1
+    Value2
+    Value3
+    Value4
+    Location ID
+    Time
+    Delay
+
+  FE8:
+   WM_SPAWNLORD Value1 Value2 *Character ID* *World map location* Value5 
+
+   Parameters:
+    Value1
+    Value2
+    Character ID
+    World map location
+    Value5
+
+  FE8:
+   REMSPRITE ID 
+
+   Removes a map sprite.
+
+   Parameters:
+    ID = ID of the sprite.
+    Value = unknown.
+
+ Portraits
+  FE8:
+   WM_SHOWPORTRAIT *Portrait ID* Position 
+
+   Parameters:
+    Portrait ID
+    Position
+
+  FE8:
+   WM_CLEARPORTRAIT Value1 Direction Delay 
+
+   Parameters:
+    Value1
+    Direction
+    Delay
+
+ Stalling
+  FE8:
+   WM_WAITFORCAM 
+
+  FE8:
+   WM_WAITFORFX 
+
+  FE8:
+   WM_WAITFORSPRITES Value1 Value2 Value3 
+
+   Parameters:
+    Value1
+    Value2
+    Value3
+
+  FE8:
+   WM_WAITFORTEXT 
+
+  FE8:
+   WM_WAITFORFXCLEAR1 
+
+  FE8:
+   WM_WAITFORFXCLEAR2 
+
+ Text
+  FE6:
+   TEXTBOXTOBOTTOM 
+
+   Put text box to the bottom.
+
+  FE8:
+   WM_SHOWTEXTWINDOW Value1 Speed Speed/Fade 
+
+   Parameters:
+    Value1
+    Speed
+    Speed/Fade
+
+  FE8:
+   WM_TEXTDECORATE 
+
+  FE8:
+   WM_TEXT *Text ID* 
+
+   Parameters:
+    Text ID
+
+  FE8:
+   WM_TEXTSTART 
+
+  FE8:
+   WM_REMOVETEXT 
