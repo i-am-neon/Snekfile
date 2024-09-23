@@ -47,6 +47,12 @@
 	// Install events
 	#include "Events/MasterEventInstaller.event"
 	MESSAGE Events end at CURRENTOFFSET
+
+	// Set the starting chapter ID to your custom PrologueEvent (0x65)
+	PUSH
+	ORG $C0B04
+	SHORT PrologueEvent
+	POP
 	
 	ASSERT $C00000 - CURRENTOFFSET // Ensures that we don't pass the end of the free space block.
 	

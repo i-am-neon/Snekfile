@@ -1,6 +1,5 @@
-
-
 // Events
 
 #define PrologueEvent 0x65
-#define Ch1Event 0x66
+#define Ch1Event 0x02
+#define Ch2Event 0x03

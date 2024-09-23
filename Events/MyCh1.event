@@ -1,4 +1,4 @@
-EventPointerTable(PrologueEvent,ThisChapter)
+EventPointerTable(Ch1Event,ThisChapter)
 
 ThisChapter:
 POIN TurnBasedEvents
@@ -41,7 +41,6 @@ Units:
 UNIT Eirika EirikaLord 0x00 Level(1,Ally,False) [5,7] 0x00 0x00 0x00 0x00 [IronSword] [0x00,0x00]
 UNIT
 
-ORG $9EEBE8
 BeginningScene:
 ENUT 0x7A       // Marks the tutorial as completed to disable it
 EVBIT_T 0x08    // Disables tutorial mode
@@ -55,5 +54,5 @@ REMA            // Removes text boxes and portraits
 ENDA            // Ends the event
 
 EndingScene:
-// MNCH Ch1Event
+MNCH Ch2Event
 ENDA
