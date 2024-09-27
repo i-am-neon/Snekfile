@@ -3,3 +3,5 @@
 PUSH
   #include "_FE8EssentialFixes.txt"
 POP
+
+#include "ASM/Map_HP_Bars/Map_HP_Bars.event"
