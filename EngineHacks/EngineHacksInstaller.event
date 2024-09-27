@@ -4,4 +4,26 @@ PUSH
   #include "_FE8EssentialFixes.txt"
 POP
 
-#include "ASM/Map_HP_Bars/Map_HP_Bars.event"
+////////////////////////////////FREE SPACE WITHIN BL RANGE
+PUSH
+ORG FreeSpaceBLRange //defined in Master.event
+#define InBLRange
+
+  //Talk and Support don't end your turn
+  #include "ASM/ContemporaryTalkSupport/ContemporaryTalkSupport.event"
+
+#undef InBLRange
+POP
+
+////////////////////////////////FREE SPACE OUT OF BL RANGE
+//start of Free space
+
+  //HP Bars (and effective weapon warning)
+  #include "ASM/Map_HP_Bars/Map_HP_Bars.event"
+
+  //Danger Zone (select button)
+  #include "ASM/DangerZone/DangerZone.event"
+
+  //Movement Arrow doesn't update on allies
+  #include "ASM/MovementArrowFix/MovementArrowFix.event"
+ALIGN 4
