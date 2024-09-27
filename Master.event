@@ -36,9 +36,9 @@
 	
 	// Install graphics
 	
-	// Install ASM hacks
+	// Install Engine hacks
 	#include "EngineHacks/EngineHacksInstaller.event"
-	MESSAGE ASM data ends at CURRENTOFFSET
+	MESSAGE Engine hacks data ends at CURRENTOFFSET
 	
 	// Install music
 	
