@@ -18,5 +18,3 @@ call "AssembleTables.bat" noPause
 
 cd "!currDir!"
 call "MAKEHACK.cmd" noPause
-
-pause
